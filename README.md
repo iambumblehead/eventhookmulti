@@ -2,15 +2,14 @@ eventhookmulti
 ==============
 **(c)[Bumblehead][0], 2013** [MIT-license](#license)  
 
-<!-- pagevanilla -->
 
 ### Overview:
 
-An object through which callbacks may be added and called through publish/subscribe model. What's special is that it wil throttle the `publish` event.
+Add callbacks to publish/subscribe style model. `eventhookmulti` may be used to throttle the activity publishing the event.
 
-For example, you have two page objects, a text field and a gallery. Each time text is added to the input, you'd like to update the gallery with related images. When someone types text into the input, several events may be fired -`keydown`, `keyup`, `onchange`, `onblur`.
+For example, two page objects, 1) text field and 2) gallery. When text is added to the field the gallery is rerendered with related images. When text is typed to the input, several events may be fired -`keydown`, `keyup`, `onchange`, `onblur`.
 
-You may want to filter gallery data with text from the input on each of these events. You want to throttle the process so that when events are fired in the same time frame, filtering happens once only. Use eventhook multi.
+You want to throttle the activity bound to these events so that filtering happens once only withing a certain time period. Use eventhook multi.
 
 It augments an [eventhook][1] object with locking functions from [lockfn][2]. So that you can throttle the activity from multiple events on the same object.
 
@@ -23,7 +22,7 @@ It augments an [eventhook][1] object with locking functions from [lockfn][2]. So
 
 eventhookmulti may be downloaded directly or installed through `npm`.
 
- * **npm**   
+ * **npm**
 
  ```bash
  $ npm install eventhookmulti
@@ -31,24 +30,50 @@ eventhookmulti may be downloaded directly or installed through `npm`.
 
  * **Direct Download**
  
- ```bash  
+ ```bash
  $ git clone https://github.com/iambumblehead/eventhookmulti.git
  ```
 
 ---------------------------------------------------------
 #### <a id="test"></a>Test:
 
- to run tests, use `npm test` from a shell.
+to run tests, use `npm test` from a shell.
 
- ```bash
- $ npm test
- ```
+```bash
+$ npm test
+```
 
 ---------------------------------------------------------
 #### <a id="get-started">GET STARTED:
 
-get started
-
+```javascript
+// construct an eventhookmulti object
+var ehookmulti = eventhookmulti.getNew({
+    throttlems : 500
+});
+  
+// add a subscriber function to the 'change' event on the ehookmulti object
+ehookmulti.addTypeFn('change', function (err, res) {
+    console.log('change event! ' + (res || ''));
+});
+  
+// fire events on the ehookmulti object
+ehookmulti.throttleFire('keyup')  // 
+ehookmulti.throttleFire('change') // 'change event! '
+ehookmulti.throttleFire('change') //
+  
+// when throttleFire is called, the functions passed to the event are throttled
+// so only the first and last functions given to throttleFire in the 'throttlems'
+// time are called.
+ehookmulti.throttleFire('change', function (exitfn) {
+    setTimeout(function () {
+        exitfn(null, 'success!');  // 'change event! success!'
+    }, 500);
+});
+  
+// if functions are fired from events on an input text field the first event
+// function and last event functions would be called.
+```
 
 ---------------------------------------------------------
 #### <a id="license">License:

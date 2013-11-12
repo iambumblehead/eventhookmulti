@@ -1,5 +1,5 @@
 // Filename: eventhookmulti.js
-// Timestamp: 2013.11.10-14:48:25 (last modified)  
+// Timestamp: 2013.11.12-14:16:14 (last modified)  
 // Author(s): Bumblehead (www.bumblehead.com)
 // Requires: eventhook.js, lockfn.js
 
@@ -67,16 +67,13 @@ var eventhookmulti = ((typeof module === 'object') ? module : {}).exports = (fun
 
     if (that.hasType(id)) {
       that.getThrottle()(function () {
-        fn(function (err, res, a, b, c) {
-          that.fireType(id, err, res, a ,b ,c);
-        });
-/*        
-        that.fnArr.map(function (fn) {
-          if (fn.idname === id) {
-            fn(a1,a2,a3,a4);
-          }
-        });
-*/
+        if (typeof fn === 'function') {
+          fn(function (err, res, a, b, c) {
+            that.fireType(id, err, res, a ,b ,c);
+          });
+        } else {
+          that.fireType(id);
+        }
       });
     }
   };
