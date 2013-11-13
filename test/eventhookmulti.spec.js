@@ -1,5 +1,5 @@
 // Filename: eventhookmulti.spec.js  
-// Timestamp: 2013.11.11-16:54:58 (last modified)  
+// Timestamp: 2013.11.12-14:17:52 (last modified)  
 // Author(s): Bumblehead (www.bumblehead.com)  
 
 
@@ -31,7 +31,22 @@ describe("ehookmulti.addTypeFn( _eventType_, _fn_)", function () {
 
 });
 
+
 describe("ehookmulti.throttleFire( _eventType_, function (exitFn) {})", function () {
+
+  it("should call automatically call callback function if no event function is passed", function () {
+    var ehookmulti = eventhookmulti.getNew({
+      throttlems : 500
+    });
+
+    var x = 0;
+    var myfun = function () { x++; };
+
+    ehookmulti.addTypeFn('change', myfun);
+    ehookmulti.throttleFire('change');
+
+    expect( x ).toBe( 1 );
+  });
 
   it("should call callback function if eventType was previously added", function () {
     var ehookmulti = eventhookmulti.getNew({
@@ -63,6 +78,22 @@ describe("ehookmulti.throttleFire( _eventType_, function (exitFn) {})", function
     });
 
     expect( x ).toBe( 0 );
+  });
+
+  it("should pass arguments from event function", function () {
+    var ehookmulti = eventhookmulti.getNew({
+      throttlems : 500
+    });
+
+    var x = 0;
+    var myfun = function (err, y) { x += y; };
+
+    ehookmulti.addTypeFn('change', myfun);
+    ehookmulti.throttleFire('change', function (exitfn) {
+      exitfn(null, 5);
+    });
+
+    expect( x ).toBe( 5 );
   });
 
   it("should call two callbacks in throttle time, first and last called within throttle time", function (done) {
