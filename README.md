@@ -78,7 +78,7 @@ ehookmulti.throttleFire('change', function (exitfn) {
 ---------------------------------------------------------
 #### <a id="license">License:
 
- ![scrounge](http://github.com/iambumblehead/scroungejs/raw/master/img/hand.png) 
+ ![scrounge](https://github.com/iambumblehead/scroungejs/raw/master/img/hand.png) 
 
 (The MIT License)
 
