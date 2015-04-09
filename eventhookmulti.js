@@ -1,5 +1,5 @@
 // Filename: eventhookmulti.js
-// Timestamp: 2013.11.12-14:16:14 (last modified)  
+// Timestamp: 2015.04.08-19:23:15 (last modified)  
 // Author(s): Bumblehead (www.bumblehead.com)
 // Requires: eventhook.js, lockfn.js
 
@@ -42,7 +42,7 @@ var eventhookmulti = ((typeof module === 'object') ? module : {}).exports = (fun
   
   proto.getThrottle = function () {
     return this.throttle || 
-      (this.throttle = lockfn.Throttling.getNew({
+      (this.throttle = lockfn.throttling.getNew({
         ms : this.throttlems
       }));
   };
