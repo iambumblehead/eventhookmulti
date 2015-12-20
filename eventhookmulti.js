@@ -1,12 +1,12 @@
 // Filename: eventhookmulti.js
-// Timestamp: 2015.04.08-19:23:15 (last modified)  
+// Timestamp: 2015.12.19-17:47:23 (last modified)
 // Author(s): Bumblehead (www.bumblehead.com)
 // Requires: eventhook.js, lockfn.js
 
 var eventhook = require('eventhook');
 var lockfn = require('lockfn');
 
-var eventhookmulti = ((typeof module === 'object') ? module : {}).exports = (function () {
+var eventhookmulti = module.exports = (function () {
 
   var proto = Object.create(eventhook.proto);
 
